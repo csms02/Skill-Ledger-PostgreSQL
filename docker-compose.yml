@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: selflearnledger-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: SelfLearnLedger
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./schema/tables.sql:/docker-entrypoint-initdb.d/01-tables.sql
+      - ./schema/views.sql:/docker-entrypoint-initdb.d/02-views.sql
+      - ./schema/triggers.sql:/docker-entrypoint-initdb.d/03-triggers.sql
+      - ./02-init-data.sql:/docker-entrypoint-initdb.d/04-init-data.sql
+      - ./db/data:/data
